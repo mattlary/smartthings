@@ -98,8 +98,7 @@ def eventHandler(evt) {
     //log.debug "Install button: ${btnNum} and Installed action: ${btnAct}"
     log.debug "Found button: $inButtonNumber and found action: $inValue"
    
-   // Trip this on both on and off- treating switch as a button.
-	if (modeOk && ((inButtonNumber == btnNum && inValue == btnAct) || inValue == "on" || inValue == "off")) {
+	if (modeOk && ((inButtonNumber == btnNum && inValue == btnAct) || inValue == "on" )) {
 		log.trace "ModeOk"
 		takeAction(evt)
 	}
@@ -172,11 +171,17 @@ private takeAction(evt) {
 	state.previous = [:]
 
 	hues.each {
+        def oldColorTemp = 0
+        try{
+          oldColorTemp = it.currentValue("colorTemperature")
+        }catch(Exception e){}
+        log.debug "oldColorTemp: ${oldColorTemp}"
 		state.previous[it.id] = [
 			"switch": it.currentValue("switch"),
 			"level" : it.currentValue("level"),
 			"hue": it.currentValue("hue"),
-			"saturation": it.currentValue("saturation")
+			"saturation": it.currentValue("saturation")//,
+            //"colorTemperature" : oldColorTemp
 		]
 	}
 
