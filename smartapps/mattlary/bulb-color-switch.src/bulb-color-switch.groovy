@@ -190,11 +190,12 @@ private takeAction(evt) {
 	def newValue = [hue: hueColor, saturation: saturation, level: lightLevel as Integer ?: 100,colorTemperature: colorTemperature]
 	log.debug "new value = $newValue"
 
-	hues*.on()
+	
     if( colorTemperature == 0 )
 		hues*.setColor(newValue)
     else
         hues*.setColorTemperature(colorTemperature)
+    hues*.on()
     def thisRev = revert ?: false    
     if( thisRev ){
        hues.each{
@@ -203,7 +204,8 @@ private takeAction(evt) {
         if( ps["switch"].equals("off")){
         	log.debug "Setting to previous state of off"
         	it.off([delay:5000])
-        }else if( ps["colorTemperature"] == 0 ){
+        }
+        if( ps["colorTemperature"] == 0 ){
             log.debug "Setting to a previous color"
         	it.setColor(ps, [delay:5000])
         }else{
