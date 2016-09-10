@@ -180,8 +180,8 @@ private takeAction(evt) {
 			"switch": it.currentValue("switch"),
 			"level" : it.currentValue("level"),
 			"hue": it.currentValue("hue"),
-			"saturation": it.currentValue("saturation")//,
-            //"colorTemperature" : oldColorTemp
+			"saturation": it.currentValue("saturation"),
+            "colorTemperature" : oldColorTemp
 		]
 	}
 
@@ -196,6 +196,10 @@ private takeAction(evt) {
         hues*.setColorTemperature(colorTemperature)
     def thisRev = revert ?: false    
     if( thisRev ){
+       hues.each{
+       	def ps = state.previous[it.id]
+        log.debug "ps: ${ps}" 
+       }
        // Pause and revert to orig
        log.debug "In revert"
     }
