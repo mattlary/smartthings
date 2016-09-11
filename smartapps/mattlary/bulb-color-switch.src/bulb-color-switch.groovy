@@ -158,7 +158,7 @@ private takeAction(evt) {
             hueColor = 2.96
 			break;
 		case "Purple":
-			hueColor = 75
+			hueColor = 78.95
 			break;
 		case "Pink":
 			hueColor = 83
